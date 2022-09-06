@@ -1,23 +1,41 @@
 const express = require("express");
+const req = require("express/lib/request");
+const res = require("express/lib/response");
 const app = express();
-const port = 3000;
+
+app.set("views", __dirname + "/views");
+app.set("view engine", "ejs");
+
+app.get("/data", (req, res) => {
+  var context = [
+    { a: "Hello", b: "World" },
+    { a: "javascript", b: "is ..." },
+    { a: "web", b: "is ..." },
+  ];
+  res.render("data.ejs", { data: context }, (err, html) => {
+    if (err) {
+      console.log(err);
+    }
+    res.end(html);
+  });
+});
+
+app.get("/contact", (req, res) => {
+  res.render(
+    "contact.ejs",
+    { name: "juliahn", mail: "teacher006@bssm.hs.kr" },
+    (err, html) => {
+      if (err) {
+        console.log(err);
+      }
+      res.end(html);
+    }
+  );
+});
+app.listen(3000, () => {
+  console.log("listening on 3000");
+});
 
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
-});
-
-app.get("/shop", (req, res) => {
-  res.sendFile(__dirname + "/shop.html");
-});
-
-app.get("/pet", (req, res) => {
-  res.sendFile(__dirname + "/pet.html");
-});
-
-app.get("/um", (req, res) => {
-  res.sendFile(__dirname + "/um.html");
-});
-
-app.listen(port, () => {
-  console.log(`listening on port http://localhost:${port}`);
+  res.send("this is home directory");
 });
