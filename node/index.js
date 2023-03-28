@@ -1,235 +1,65 @@
-const http = require("http");
-const url = require("url");
+const express = require("express");
+const app = express();
 const fs = require("fs");
 
-const server = http.createServer((req, res) => {
-  const { pathname } = url.parse(req.url, true);
-
-  switch (req.method) {
-    case "GET":
-      if (pathname === "/") {
-        root(req, res);
-      } else if (pathname === "/admin") {
-        admin(req, res);
-      } else if (pathname.startsWith("/hello")) {
-        hello(req, res);
-      } else if (pathname === "/users") {
-        getUsers(req, res);
-      } else if (pathname === "/about") {
-        about(req, res);
-      } else if (pathname === "/alert") {
-        alert(req, res);
-      }
-      break;
-    case "POST":
-      if (pathname === "/users") {
-        createUser(req, res);
-      }
-      if (pathname === "/login") {
-        loginUser(req, res);
-      }
-      break;
-    case "PUT":
-      if (pathname.startsWith("/users")) {
-        updateUser(req, res);
-      }
-      break;
-    case "DELETE":
-      if (pathname.startsWith("/users")) {
-        deleteUser(req, res);
-      }
-      break;
-    default:
-      notFound();
-  }
+// URL Routing
+app.get("/", (req, res) => {
+  res.send("Hello World!");
 });
 
-const root = (req, res) => {
-  res.write("Hello world!");
-  res.end();
-};
+// GET URL 인자 받아오기
+app.get("/user/:id", (req, res) => {
+  const userId = req.params.id;
+  res.send(`User ID is ${userId}`);
+});
 
-const admin = (req, res) => {
-  res.write("Hello admin!");
-  res.end();
-};
-
-const hello = (req, res) => {
-  var queryData = url.parse(req.url, true).query;
-  console.log(queryData.name);
-  res.write(`hello, ${queryData.name}`);
-  res.end();
-};
-
-const about = (req, res) => {
-  fs.readFile("./index.html", (err, content) => {
-    if (err) {
-      res.writeHead(500);
-      res.end(`Error: ${err.code}`);
-      return;
-    }
-    res.writeHead(200, { "Content-Type": "text/html" });
-    res.end(content);
+// fs 모듈을 사용해서 경로 별 파일 지정하기
+app.get("/file/:name", (req, res) => {
+  const fileName = req.params.name;
+  fs.readFile(`${__dirname}/${fileName}`, (err, data) => {
+    if (err) throw err;
+    res.send(data);
   });
-};
+});
 
-const alert = (req, res) => {
-  fs.readFile("./alert.html", (err, content) => {
-    if (err) {
-      res.writeHead(500);
-      res.end(`Error: ${err.code}`);
-      return;
-    }
-    res.writeHead(200, { "Content-Type": "text/html" });
-    res.end(content);
-  });
-};
+// JSON객체를 이용한 POST방식 로그인 기능 구현
+app.use(express.json());
 
-function getUsers(req, res) {
-  fs.readFile("users.json", "utf8", (err, data) => {
-    if (err) {
-      res.writeHead(500, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ error: "Internal Server Error" }));
-    } else {
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(data);
-    }
-  });
-}
+app.post("/login", (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
 
-function createUser(req, res) {
-  let body = "";
+  // 로그인 로직 구현
 
-  req.on("data", (chunk) => {
-    body += chunk.toString();
-  });
+  res.send("Login successful!");
+});
 
-  req.on("end", () => {
-    const user = JSON.parse(body);
+// REST API 규칙에 맞게 CRUD제작하기
+// Create
+app.post("/users", (req, res) => {
+  // 사용자 생성 로직 구현
+});
 
-    fs.readFile("users.json", "utf8", (err, data) => {
-      if (err) {
-        res.writeHead(500, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ error: "Internal Server Error" }));
-      } else {
-        const users = JSON.parse(data);
-        user.id = users[users.length - 1].id + 1;
-        users.push(user);
+// Read
+app.get("/users/:id", (req, res) => {
+  // 특정 사용자 정보 가져오기 로직 구현
+});
 
-        fs.writeFile("users.json", JSON.stringify(users), (err) => {
-          if (err) {
-            res.writeHead(500, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ error: "Internal Server Error" }));
-          } else {
-            res.writeHead(201, { "Content-Type": "application/json" });
-            res.end(JSON.stringify(user));
-          }
-        });
-      }
-    });
-  });
-}
+// Update
+app.put("/users/:id", (req, res) => {
+  // 사용자 정보 수정 로직 구현
+});
 
-function loginUser(req, res) {
-  let body = "";
+// Delete
+app.delete("/users/:id", (req, res) => {
+  // 사용자 삭제 로직 구현
+});
 
-  req.on("data", (chunk) => {
-    body += chunk.toString();
-  });
+app.get("/users/:userId/", function (req, res) {
+  const userId = req.params.userId;
+  res.send(`User ID is ${userId}`);
+});
 
-  req.on("end", () => {
-    const payload = JSON.parse(body);
-    fs.readFile("users.json", "utf8", (err, data) => {
-      if (err) {
-        res.writeHead(500, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ error: "Internal Server Error" }));
-      } else {
-        const users = JSON.parse(data);
-        const index = users.findIndex((user) => user.email === payload.email);
-        if (payload.password === users[index].password) {
-          res.write("로그인");
-          res.end();
-        } else {
-          res.write("실패!");
-          res.end();
-        }
-      }
-    });
-  });
-}
-
-function updateUser(req, res) {
-  const id = parseInt(req.url.split("/")[2]);
-
-  fs.readFile("users.json", "utf8", (err, data) => {
-    if (err) {
-      res.writeHead(500, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ error: "Internal Server Error" }));
-    } else {
-      let users = JSON.parse(data);
-      const index = users.findIndex((user) => user.id === id);
-      if (index === -1) {
-        res.writeHead(404, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ error: "User not found" }));
-      } else {
-        let body = "";
-
-        req.on("data", (chunk) => {
-          body += chunk.toString();
-        });
-
-        req.on("end", () => {
-          const user = JSON.parse(body);
-          users[index] = { ...users[index], ...user };
-          fs.writeFile("users.json", JSON.stringify(users), (err) => {
-            if (err) {
-              res.writeHead(500, { "Content-Type": "application/json" });
-              res.end(JSON.stringify({ error: "Internal Server Error" }));
-            } else {
-              res.writeHead(200, { "Content-Type": "application/json" });
-              res.end(JSON.stringify(users[index]));
-            }
-          });
-        });
-      }
-    }
-  });
-}
-
-function deleteUser(req, res) {
-  const id = parseInt(req.url.split("/")[2]);
-
-  fs.readFile("users.json", "utf8", (err, data) => {
-    if (err) {
-      res.writeHead(500, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ error: "Internal Server Error" }));
-    } else {
-      let users = JSON.parse(data);
-      const index = users.findIndex((user) => user.id === id);
-      if (index === -1) {
-        res.writeHead(404, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ error: "User not found" }));
-      } else {
-        users = users.filter((user) => user.id !== id);
-        fs.writeFile("users.json", JSON.stringify(users), (err) => {
-          if (err) {
-            res.writeHead(500, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ error: "Internal Server Error" }));
-          } else {
-            res.writeHead(204);
-            res.end();
-          }
-        });
-      }
-    }
-  });
-}
-
-const notFound = (req, res) => {
-  res.writeHead(404, { "Content-Type": "application/json" });
-  res.end(JSON.stringify({ error: "Not Found" }));
-};
-
-server.listen(8080, () => {
-  console.log("listening on http://localhost:8080");
+app.listen(3000, () => {
+  console.log("Server is running on port 3000");
 });
