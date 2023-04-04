@@ -67,4 +67,4 @@ def post_board(body: schemas.quote, db: Session = Depends(get_db)):
     scriptData = model.quote(
         quote_content=body.quote_content, charactor_name=body.charactor_name)
     post_db(db, scriptData)
-    return {"code": 200, "response": "추가 완료", "Data": scriptData}
+    return {"response": "추가 완료"}
