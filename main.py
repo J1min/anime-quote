@@ -37,8 +37,8 @@ def post_db(db, data):
     db.refresh(data)
 
 
-@app.get("/script")
-def get_all_script(db: Session = Depends(get_db)):
+@app.get("/quote")
+def get_all_quote(db: Session = Depends(get_db)):
     quote_list = db.query(model.quote).all()
     random_number = random.randint(0, len(quote_list) - 1)
     random_quote = {
@@ -49,22 +49,22 @@ def get_all_script(db: Session = Depends(get_db)):
     return {"quote": random_quote}
 
 
-@app.get("/script/all")
-def get_all_script(db: Session = Depends(get_db)):
+@app.get("/quote/all")
+def get_all_quote(db: Session = Depends(get_db)):
     quote_list = db.query(model.quote).all()
     return {"list": quote_list}
 
 
-@app.get("/script/{script_id}")
-def get_script(script_id: int, db: Session = Depends(get_db)):
+@app.get("/quote/{quote_id}")
+def get_quote(quote_id: int, db: Session = Depends(get_db)):
     quote = db.query(model.quote).filter(
-        model.quote.quote_id == script_id).first()
+        model.quote.quote_id == quote_id).first()
     return {"quote": quote}
 
 
-@app.post("/script")
+@app.post("/quote")
 def post_board(body: schemas.quote, db: Session = Depends(get_db)):
-    scriptData = model.quote(
+    quote_data = model.quote(
         quote_content=body.quote_content, charactor_name=body.charactor_name)
-    post_db(db, scriptData)
+    post_db(db, quote_data)
     return {"response": "추가 완료"}
