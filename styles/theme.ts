@@ -1,5 +1,5 @@
-const main = "#BB86FC";
-const secondary = "#DABFFC";
+const primary = "#9B8B7C";
+const secondary = "#E7D4C8";
 const background = "#0D1117";
 const green = "#3BB143";
 const white = "#fffff4";
@@ -133,7 +133,7 @@ const gray = {
 };
 
 export default {
-  main,
+  primary,
   secondary,
   background,
   red,
