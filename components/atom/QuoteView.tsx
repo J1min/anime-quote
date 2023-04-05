@@ -26,7 +26,7 @@ const QuoteWrapper = styled.article`
 
   max-width: 40rem;
   width: 75%;
-  max-height: 600px;
+  max-height: 40rem;
   overflow: auto;
 
   word-break: keep-all;
