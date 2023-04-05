@@ -21,4 +21,5 @@ const QuoteListWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
+  padding-bottom: 4rem;
 `;
