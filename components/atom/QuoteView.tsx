@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { Quote } from "@/types/quote.interface";
 import theme from "@/styles/theme";
-import QuoteIcon from "../icons/QuoteIcon";
+import Image from "next/image";
+import { QuoteIcon } from "../icons";
 
 interface QuoteViewProps {
   quote: Quote;
@@ -10,7 +11,7 @@ interface QuoteViewProps {
 export default function QuoteView({ quote }: QuoteViewProps) {
   return (
     <QuoteWrapper>
-      <QuoteIcon />
+      <Image src={QuoteIcon} alt="따옴표" />
       <QuoteContent>{quote.quote_content}</QuoteContent>
       <QuoteCharactorName>-{quote.charactor_name}-</QuoteCharactorName>
     </QuoteWrapper>
