@@ -1,23 +1,35 @@
 import httpClient from "@/apis";
+import { QuoteListResponse, QuoteResponse } from "@/types/quote.interface";
 import { useQuery } from "@tanstack/react-query";
 
 export const useRandomQuote = () => {
-  const { data } = useQuery(["useRandomQuote"], () =>
+  const { data } = useQuery<QuoteResponse>(["useRandomQuote"], () =>
     httpClient.quote.get().then((r) => r.data),
   );
-  return data;
+  return {
+    data: data?.quote || { charactor_name: "", quote_content: "", quote_id: 0 },
+  };
 };
 
 export const useQuoteById = (quoteId: number) => {
-  const { data } = useQuery(["useQuoteById"], () =>
-    httpClient.quote.getById({ params: { id: quoteId } }).then((r) => r.data),
+  const { data } = useQuery<QuoteResponse>(
+    ["useQuoteById"],
+    () =>
+      httpClient.quote.getById({ params: { id: quoteId } }).then((r) => r.data),
+    {
+      enabled: !!quoteId,
+    },
   );
-  return data;
+  return {
+    data: data?.quote || { charactor_name: "", quote_content: "", quote_id: 0 },
+  };
 };
 
 export const useAllQuote = () => {
-  const { data } = useQuery(["useAllQuote"], () =>
+  const { data } = useQuery<QuoteListResponse>(["useAllQuote"], () =>
     httpClient.quote.all().then((r) => r.data),
   );
-  return data;
+  return {
+    list: data?.list || [],
+  };
 };
