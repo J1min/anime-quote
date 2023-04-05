@@ -7,7 +7,7 @@ export default function QuoteAllPage() {
   const { list: quoteList } = useAllQuote();
   return (
     <QuoteAllPageLayout
-      title={<Title>모든 명언 조회</Title>}
+      title={<Title>명언 전체 조회</Title>}
       app={<QuoteListView quoteList={quoteList} />}
     />
   );
