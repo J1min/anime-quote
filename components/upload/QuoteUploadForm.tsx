@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import httpClient from "@/apis";
 import { Quote } from "@/types/quote.interface";
@@ -19,15 +19,16 @@ export default function QuoteUploadForm() {
     uploadRequest(quoteData),
   );
 
-  const onValid = (quoteData: QuoteForm) => {
+  const onValid: SubmitHandler<QuoteForm> = (quoteData: QuoteForm) =>
     uploadMutation.mutate(quoteData);
-  };
-  const onInValid = () => {};
+
+  const onInValid: SubmitErrorHandler<QuoteForm> = (inValidData) =>
+    console.info(inValidData);
 
   return (
     <form onSubmit={handleSubmit((validData) => onValid(validData), onInValid)}>
-      <Input {...register("charactor_name")} />
-      <Input {...register("quote_content")} />
+      <Input registerReturn={register("charactor_name")} />
+      <Input registerReturn={register("quote_content")} />
       <Button type="submit">추가</Button>
     </form>
   );
