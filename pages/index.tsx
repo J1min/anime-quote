@@ -1,9 +1,12 @@
-import { useEffect } from "react";
-import httpClient from "@/apis";
+import { useRandomQuote } from "@/model/quote";
 
 export default function Main() {
-  useEffect(() => {
-    httpClient.quote.get().then((r) => console.log(r.data));
-  }, []);
-  return <section id="main">I love 1.2.9</section>;
+  const { data: quoteData } = useRandomQuote();
+
+  return (
+    <section id="main">
+      <div>{quoteData.quote_content}</div>
+      <div>{quoteData.charactor_name}</div>
+    </section>
+  );
 }
