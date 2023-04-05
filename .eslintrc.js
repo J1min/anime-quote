@@ -3,7 +3,7 @@ module.exports = {
   parser: "@typescript-eslint/parser",
   plugins: ["@typescript-eslint", "prettier"],
   parserOptions: {
-    project: "/Users/J1min/Desktop/Code/Anime-Quote/client/tsconfig.json",
+    project: "./tsconfig.json",
   },
   env: {
     node: true,
