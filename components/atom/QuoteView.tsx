@@ -26,9 +26,9 @@ const QuoteWrapper = styled.article<{ isFull: boolean }>`
   text-align: center;
   gap: 1.5rem;
 
-  max-width: 40rem;
+  max-width: 50rem;
   width: 75%;
-  ${(props) => props.isFull && "max-height: 40rem"};
+  ${(props) => !props.isFull && "max-height: 40rem"};
 
   overflow: auto;
   word-break: keep-all;
