@@ -27,4 +27,5 @@ const QuoteIdPageWrapper = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
+  gap: 1.5rem;
 `;
