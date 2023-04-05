@@ -24,8 +24,10 @@ const QuoteWrapper = styled.article`
   text-align: center;
   gap: 1.5rem;
 
-  max-width: 45rem;
+  max-width: 40rem;
   width: 75%;
+  max-height: 600px;
+  overflow: auto;
 
   word-break: keep-all;
   line-height: 3.5rem;

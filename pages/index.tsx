@@ -1,12 +1,9 @@
+import QuoteView from "@/components/atom/QuoteView";
+import QuotePageLayout from "@/layout/QuotePageLayout";
 import { useRandomQuote } from "@/model/quote";
 
 export default function Main() {
   const { data: quoteData } = useRandomQuote();
 
-  return (
-    <section id="main">
-      <div>{quoteData.quote_content}</div>
-      <div>{quoteData.charactor_name}</div>
-    </section>
-  );
+  return <QuotePageLayout app={<QuoteView quote={quoteData} />} />;
 }
