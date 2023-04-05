@@ -1,15 +1,17 @@
+import QuoteView from "@/components/atom/QuoteView";
+import Title from "@/components/atom/Title";
+import QuoteIdPageLayout from "@/layout/QuoteIdPageLayout";
 import { useQuoteById } from "@/model/quote";
 import { useRouter } from "next/router";
 
 export default function QuoteIdPage() {
   const router = useRouter();
-  const { data: quoteData } = useQuoteById(
-    Number(router.query.quoteId as string),
-  );
+  const { data: quoteData } = useQuoteById(Number(router.query.quoteId));
+
   return (
-    <section id="quote-id-page">
-      <div>{quoteData.quote_content}</div>
-      <div>{quoteData.charactor_name}</div>
-    </section>
+    <QuoteIdPageLayout
+      title={<Title>선택한 명언</Title>}
+      app={<QuoteView quote={quoteData} />}
+    />
   );
 }
