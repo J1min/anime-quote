@@ -5,7 +5,7 @@ export default function QuoteAllPage() {
   return (
     <section id="quote-all-page">
       {quoteList.map((quote) => (
-        <div>
+        <div key={quote.quote_id}>
           <div>{quote.quote_content}</div>
           <div>{quote.charactor_name}</div>
         </div>
