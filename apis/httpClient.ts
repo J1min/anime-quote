@@ -27,6 +27,13 @@ export class HttpClient {
     return this.api.get("", { ...HttpClient.clientConfig, ...requestConfig });
   }
 
+  all(requestConfig?: AxiosRequestConfig) {
+    return this.api.get("/all", {
+      ...HttpClient.clientConfig,
+      ...requestConfig,
+    });
+  }
+
   getById(requestConfig?: AxiosRequestConfig) {
     return this.api.get("/:id", {
       ...HttpClient.clientConfig,
