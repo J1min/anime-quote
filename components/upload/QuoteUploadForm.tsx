@@ -5,6 +5,7 @@ import httpClient from "@/apis";
 import { Quote } from "@/types/quote.interface";
 import Input from "../atom/Input";
 import Button from "../atom/Button";
+import Title from "../atom/Title";
 
 type QuoteForm = Omit<Quote, "quote_id">;
 
@@ -30,6 +31,7 @@ export default function QuoteUploadForm() {
     <QuoteUploadFormView
       onSubmit={handleSubmit((validData) => onValid(validData), onInValid)}
     >
+      <Title>명언 추가</Title>
       <Input registerReturn={register("quote_content")} placeholder="명언" />
       <Input registerReturn={register("charactor_name")} placeholder="인물" />
       <Button type="submit">추가</Button>
