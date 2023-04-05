@@ -1,5 +1,6 @@
 import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
+import styled from "styled-components";
 import httpClient from "@/apis";
 import { Quote } from "@/types/quote.interface";
 import Input from "../atom/Input";
@@ -26,10 +27,21 @@ export default function QuoteUploadForm() {
     console.info(inValidData);
 
   return (
-    <form onSubmit={handleSubmit((validData) => onValid(validData), onInValid)}>
-      <Input registerReturn={register("charactor_name")} />
-      <Input registerReturn={register("quote_content")} />
+    <QuoteUploadFormView
+      onSubmit={handleSubmit((validData) => onValid(validData), onInValid)}
+    >
+      <Input registerReturn={register("quote_content")} placeholder="명언" />
+      <Input registerReturn={register("charactor_name")} placeholder="인물" />
       <Button type="submit">추가</Button>
-    </form>
+    </QuoteUploadFormView>
   );
 }
+
+const QuoteUploadFormView = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  width: 75%;
+  max-width: 40rem;
+`;
