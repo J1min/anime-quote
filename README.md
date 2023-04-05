@@ -1,2 +1,1 @@
-# J1min.log-Backend
-## FastAPI, Mysql 기반 블로그 + 레주메 서비스
+### 랜덤 애니 명대사 API 
