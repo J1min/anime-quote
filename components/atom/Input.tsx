@@ -16,8 +16,7 @@ export default function Input({
 }
 
 const InputView = styled.input<InputProps>`
-  background-color: ${theme.primary}
-  color:  ${theme.primary}
+  background-color: ${theme.secondary};
   width: 75%;
   max-width: 40rem;
   border: 0;
