@@ -10,7 +10,7 @@ export default function QuoteListView({ quoteList }: QuoteViewProps) {
   return (
     <QuoteListWrapper>
       {quoteList.map((quote) => (
-        <QuoteView key={quote.quote_id} quote={quote} />
+        <QuoteView key={quote.quote_id} quote={quote} isFull />
       ))}
     </QuoteListWrapper>
   );
@@ -21,5 +21,5 @@ const QuoteListWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
-  padding-bottom: 4rem;
+  padding: 4rem 0;
 `;

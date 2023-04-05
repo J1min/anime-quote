@@ -10,5 +10,4 @@ export default function Title({ children }: TitleProps) {
 }
 const TitleWrapper = styled.div`
   font-size: 2rem;
-  margin-bottom: 2rem;
 `;

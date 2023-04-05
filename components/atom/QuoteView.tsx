@@ -6,11 +6,12 @@ import { QuoteIcon } from "../icons";
 
 interface QuoteViewProps {
   quote: Quote;
+  isFull?: boolean;
 }
 
-export default function QuoteView({ quote }: QuoteViewProps) {
+export default function QuoteView({ quote, isFull = false }: QuoteViewProps) {
   return (
-    <QuoteWrapper>
+    <QuoteWrapper isFull={isFull}>
       <Image src={QuoteIcon} alt="따옴표" />
       <QuoteContent>{quote.quote_content}</QuoteContent>
       <QuoteCharactorName>-{quote.charactor_name}-</QuoteCharactorName>
@@ -18,7 +19,7 @@ export default function QuoteView({ quote }: QuoteViewProps) {
   );
 }
 
-const QuoteWrapper = styled.article`
+const QuoteWrapper = styled.article<{ isFull: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,9 +28,9 @@ const QuoteWrapper = styled.article`
 
   max-width: 40rem;
   width: 75%;
-  max-height: 40rem;
-  overflow: auto;
+  ${(props) => props.isFull && "max-height: 40rem"};
 
+  overflow: auto;
   word-break: keep-all;
   line-height: 3.5rem;
 
