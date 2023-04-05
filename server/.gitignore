@@ -1,8 +1,0 @@
-.env
-database.sql
-secret.json
-/photo
-__pycache__
-/cli
-/private
-*.pyc
