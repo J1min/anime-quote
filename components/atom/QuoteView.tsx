@@ -17,7 +17,7 @@ export default function QuoteView({ quote, isFull = false }: QuoteViewProps) {
       "react-component-export-image"
     );
     return exportComponentAsPNG(imageExportComponent, {
-      fileName: quote.quote_content,
+      fileName: `${quote.quote_content}.png`,
     });
   };
 
