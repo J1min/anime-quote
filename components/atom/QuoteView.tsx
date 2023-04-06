@@ -52,6 +52,7 @@ const QuoteWrapper = styled.article<{ isFull: boolean }>`
 
   padding: 3.75rem 7.5rem;
   box-sizing: border-box;
+  margin-bottom: 3rem;
 `;
 
 const QuoteContent = styled.span`
