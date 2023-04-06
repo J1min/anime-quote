@@ -1,8 +1,8 @@
-from fastapi import FastAPI, UploadFile, Form
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.params import Depends
 from sqlalchemy.orm import Session
-from fastapi.responses import FileResponse
+from sqlalchemy.sql.expression import func, select
 
 from interface import model, schemas
 import database
@@ -39,13 +39,13 @@ def post_db(db, data):
 
 @app.get("/quote")
 def get_all_quote(db: Session = Depends(get_db)):
-    quote_list = db.query(model.quote).all()
-    random_number = random.randint(0, len(quote_list) - 1)
+    quote_list = db.query(model.quote).order_by(func.rand()).limit(1).first()
     random_quote = {
-        "quote_content": quote_list[random_number].quote_content,
-        "charactor_name": quote_list[random_number].charactor_name,
-        "quote_id":  quote_list[random_number].quote_id,
+        "quote_content": quote_list.quote_content,
+        "charactor_name": quote_list.charactor_name,
+        "quote_id":  quote_list.quote_id,
     }
+
     return {"quote": random_quote}
 
 
