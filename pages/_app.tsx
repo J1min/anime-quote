@@ -6,6 +6,8 @@ import theme from "@/styles/theme";
 import GlobalStyle from "@/styles/globalStyle";
 import UserStyle from "@/styles/userStyle";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const client = new QueryClient({
   defaultOptions: {
@@ -24,6 +26,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <UserStyle />
           <Component {...pageProps} />
         </ThemeProvider>
+        <ToastContainer />
       </RecoilRoot>
     </QueryClientProvider>
   );
