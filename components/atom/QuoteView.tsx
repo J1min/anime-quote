@@ -27,7 +27,9 @@ export default function QuoteView({ quote, isFull = false }: QuoteViewProps) {
         <QuoteContent>{quote.quote_content}</QuoteContent>
         <QuoteCharactorName>-{quote.charactor_name}-</QuoteCharactorName>
       </QuoteWrapper>
-      <Button onClick={exportImage}>이미지 저장</Button>
+      <Button style={{ marginTop: "1rem" }} onClick={exportImage}>
+        이미지 저장
+      </Button>
     </>
   );
 }
@@ -52,7 +54,7 @@ const QuoteWrapper = styled.article<{ isFull: boolean }>`
 
   padding: 3.75rem 7.5rem;
   box-sizing: border-box;
-  margin-bottom: 3rem;
+  margin-top: 3rem;
 `;
 
 const QuoteContent = styled.span`
