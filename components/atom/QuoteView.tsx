@@ -1,8 +1,8 @@
+import { useRef } from "react";
 import styled from "styled-components";
 import { Quote } from "@/types/quote.interface";
 import theme from "@/styles/theme";
-import Image from "next/image";
-import { QuoteIcon } from "../icons";
+import Button from "./Button";
 
 interface QuoteViewProps {
   quote: Quote;
@@ -10,12 +10,25 @@ interface QuoteViewProps {
 }
 
 export default function QuoteView({ quote, isFull = false }: QuoteViewProps) {
+  const imageExportComponent = useRef(null);
+
+  const exportImage = async () => {
+    const { exportComponentAsPNG } = await import(
+      "react-component-export-image"
+    );
+    return exportComponentAsPNG(imageExportComponent, {
+      fileName: quote.quote_content,
+    });
+  };
+
   return (
-    <QuoteWrapper isFull={isFull}>
-      <Image src={QuoteIcon} alt="따옴표" />
-      <QuoteContent>{quote.quote_content}</QuoteContent>
-      <QuoteCharactorName>-{quote.charactor_name}-</QuoteCharactorName>
-    </QuoteWrapper>
+    <>
+      <QuoteWrapper ref={imageExportComponent} isFull={isFull}>
+        <QuoteContent>{quote.quote_content}</QuoteContent>
+        <QuoteCharactorName>-{quote.charactor_name}-</QuoteCharactorName>
+      </QuoteWrapper>
+      <Button onClick={exportImage}>이미지 저장</Button>
+    </>
   );
 }
 
@@ -34,13 +47,16 @@ const QuoteWrapper = styled.article<{ isFull: boolean }>`
   word-break: keep-all;
   line-height: 3.5rem;
 
-  border: 1px solid ${theme.primary};
+  border: 3px solid ${theme.primary};
+  filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.25));
+
   padding: 3.75rem 7.5rem;
   box-sizing: border-box;
 `;
 
 const QuoteContent = styled.span`
   font-size: 2.5rem;
+  font-weight: bold;
 `;
 
 const QuoteCharactorName = styled.span`
