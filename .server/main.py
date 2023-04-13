@@ -6,13 +6,10 @@ from sqlalchemy.sql.expression import func, select
 
 from interface import model, schemas
 import database
-import random
 
 app = FastAPI()
 
-origins = [
-    "*"
-]
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
