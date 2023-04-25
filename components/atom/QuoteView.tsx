@@ -66,4 +66,5 @@ const QuoteCharactorName = styled.span`
   font-family: "Chosunilbo_myungjo";
   font-size: 1.5rem;
   letter-spacing: 0.2rem;
+  white-space: nowrap;
 `;
