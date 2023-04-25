@@ -1,9 +1,22 @@
+import httpClient from "@/apis";
 import QuoteView from "@/components/atom/QuoteView";
 import QuotePageLayout from "@/layout/QuotePageLayout";
-import { useRandomQuote } from "@/model/quote";
+import { Quote } from "@/types/quote.interface";
+import { deepcopy } from "@/utils/array";
+import { GetServerSideProps } from "next";
 
-export default function MainPage() {
-  const { data: quoteData } = useRandomQuote();
-
-  return <QuotePageLayout app={<QuoteView quote={quoteData} />} />;
+interface MainPageProps {
+  quote: Quote;
 }
+
+export default function MainPage({ quote }: MainPageProps) {
+  return <QuotePageLayout app={<QuoteView quote={quote} />} />;
+}
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const { data: quote } = await httpClient.quote
+    .get()
+    .then((r) => ({ data: deepcopy(r.data.quote) }));
+
+  return { props: { quote } };
+};
