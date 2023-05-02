@@ -7,7 +7,7 @@ export const useRandomQuote = () => {
     httpClient.quote.get().then((r) => r.data),
   );
   return {
-    data: data?.quote || { charactor_name: "", quote_content: "", quote_id: 0 },
+    data: data?.quote || { character_name: "", quote_content: "", quote_id: 0 },
   };
 };
 
@@ -21,7 +21,7 @@ export const useQuoteById = (quoteId: number) => {
     },
   );
   return {
-    data: data?.quote || { charactor_name: "", quote_content: "", quote_id: 0 },
+    data: data?.quote || { character_name: "", quote_content: "", quote_id: 0 },
   };
 };
 

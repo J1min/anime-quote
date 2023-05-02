@@ -11,7 +11,7 @@ import Title from "../atom/Title";
 export interface QuoteForm {
   password: string;
   quote_content: string;
-  charactor_name: string;
+  character_name: string;
 }
 
 export default function QuoteUploadForm() {
@@ -46,7 +46,7 @@ export default function QuoteUploadForm() {
     >
       <Title>명언 추가</Title>
       <Input registerReturn={register("quote_content")} placeholder="명언" />
-      <Input registerReturn={register("charactor_name")} placeholder="인물" />
+      <Input registerReturn={register("character_name")} placeholder="인물" />
       <Input
         type="password"
         registerReturn={register("password")}

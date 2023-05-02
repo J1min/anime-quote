@@ -10,22 +10,22 @@ interface QuoteViewProps {
 }
 
 export default function QuoteView({ quote, isFull = false }: QuoteViewProps) {
-  const imageExportComponent = useRef(null);
+  const imageExportComponentRef = useRef(null);
 
   const exportImage = async () => {
     const { exportComponentAsPNG } = await import(
       "react-component-export-image"
     );
-    return exportComponentAsPNG(imageExportComponent, {
-      fileName: `${quote.charactor_name.split(" ").join("_")}.png`,
+    return exportComponentAsPNG(imageExportComponentRef, {
+      fileName: `${quote.character_name.split(" ").join("_")}.png`,
     });
   };
 
   return (
     <>
-      <QuoteWrapper ref={imageExportComponent} isFull={isFull}>
+      <QuoteWrapper ref={imageExportComponentRef} isFull={isFull}>
         <QuoteContent>{quote.quote_content}</QuoteContent>
-        <QuoteCharactorName>-{quote.charactor_name}-</QuoteCharactorName>
+        <QuoteCharacterName>-{quote.character_name}-</QuoteCharacterName>
       </QuoteWrapper>
       <Button style={{ marginTop: "1rem" }} onClick={exportImage}>
         이미지 저장
@@ -62,7 +62,7 @@ const QuoteContent = styled.span`
   font-weight: bold;
 `;
 
-const QuoteCharactorName = styled.span`
+const QuoteCharacterName = styled.span`
   font-family: "Chosunilbo_myungjo";
   font-size: 1.5rem;
   letter-spacing: 0.2rem;
